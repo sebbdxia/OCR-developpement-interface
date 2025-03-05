@@ -1,13 +1,16 @@
 import urllib.request
 import xml.etree.ElementTree as ET
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def telecharger_blobs():
     # URL pour lister le container avec les paramètres du SAS token
     liste_url = ("https://projetocrstorageacc.blob.core.windows.net/invoices-2018?"
                  "restype=container&comp=list&sv=2019-12-12&ss=b&srt=sco&sp=rl&"
                  "se=2026-01-01T00:00:00Z&st=2025-01-01T00:00:00Z&spr=https&"
-                 "sig=%2BjCi7n8g%2F3849Rprey27XzHMoZN9zdVfDw6CifS6Y1U%3D")
+                 f"sig={os.getenv('SAS_TOKEN')}")
     
     try:
         with urllib.request.urlopen(liste_url) as response:
@@ -27,7 +30,7 @@ def telecharger_blobs():
     # Token pour le téléchargement des blobs (sans les paramètres propres au listing)
     token = ("sv=2019-12-12&ss=b&srt=sco&sp=rl&"
              "se=2026-01-01T00:00:00Z&st=2025-01-01T00:00:00Z&"
-             "spr=https&sig=%2BjCi7n8g%2F3849Rprey27XzHMoZN9zdVfDw6CifS6Y1U%3D")
+             f"spr=https&sig={os.getenv('SAS_TOKEN')}")
     
     base_url = "https://projetocrstorageacc.blob.core.windows.net/invoices-2018"
     
@@ -46,5 +49,5 @@ def telecharger_blobs():
         except Exception as e:
             print(f"Erreur lors du téléchargement de {blob_name} :", e)
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     telecharger_blobs()
