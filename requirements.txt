@@ -1,0 +1,3 @@
+requests
+python-dotenv
+# Ajoutez d'autres dépendances ici si nécessaire
