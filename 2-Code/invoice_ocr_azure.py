@@ -46,7 +46,8 @@ class InvoiceModel:
         return self.collection.insert_one(invoice_data)
     
     def get_invoice(self, invoice_id):
-        return self.collection.find_one({"_id": invoice_id})
+        from bson.objectid import ObjectId
+        return self.collection.find_one({"_id": ObjectId(invoice_id)})
     
     def get_all_invoices(self):
         return list(self.collection.find())
@@ -301,6 +302,13 @@ class InvoiceProcessor:
             return self.invoice_model.get_all_invoices()
 
 # ------ Routes Flask ------
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """
+    Endpoint de vérification de santé du service
+    """
+    return jsonify({"status": "ok", "timestamp": datetime.now().isoformat()})
+
 @app.route('/api/process', methods=['POST'])
 def process_invoices():
     try:
@@ -315,7 +323,14 @@ def get_invoices():
     try:
         processor = InvoiceProcessor(mongo)
         invoices = processor.get_invoice_results()
-        return jsonify({"status": "success", "count": len(invoices), "invoices": invoices})
+        
+        # Convertir les ObjectId en strings pour le JSON
+        serializable_invoices = []
+        for invoice in invoices:
+            invoice['_id'] = str(invoice['_id'])
+            serializable_invoices.append(invoice)
+        
+        return jsonify({"status": "success", "count": len(serializable_invoices), "invoices": serializable_invoices})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
@@ -326,10 +341,19 @@ def get_invoice(invoice_id):
         invoice = processor.get_invoice_results(invoice_id)
         if not invoice:
             return jsonify({"status": "error", "message": "Invoice not found"}), 404
+        
+        # Convertir l'ObjectId en string pour le JSON
+        invoice['_id'] = str(invoice['_id'])
+        
         return jsonify({"status": "success", "invoice": invoice})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
 # ------ Point d'entrée principal ------
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
+    # Afficher l'URL du serveur pour faciliter la connexion
+    port = int(os.getenv('PORT', 5000))
+    print(f"Starting server on http://localhost:{port}")
+    print(f"API will be available at http://localhost:{port}/api")
+    
+    app.run(debug=True, host='0.0.0.0', port=port)
