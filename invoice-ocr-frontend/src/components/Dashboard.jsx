@@ -253,4 +253,55 @@ const Dashboard = () => {
                         <Grid item xs={2} sm={2}>
                           <CircularProgress 
                             variant="determinate" 
-                            value={(invoice.qualityMetrics?.overall
+                            value={(invoice.qualityMetrics?.overallScore || 0) * 100} 
+                            size={24}
+                            color={
+                              invoice.qualityMetrics?.overallScore >= 0.7 
+                                ? "success" 
+                                : invoice.qualityMetrics?.overallScore >= 0.5 
+                                  ? "warning" 
+                                  : "error"
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={1} sx={{ textAlign: 'right' }}>
+                          <Button 
+                            component={Link} 
+                            to={`/invoices/${invoice._id}`} 
+                            size="small"
+                          >
+                            Détails
+                          </Button>
+                        </Grid>
+                      </Grid>
+                      {index < recentInvoices.length - 1 && (
+                        <Box sx={{ my: 1 }}>
+                          <Divider />
+                        </Box>
+                      )}
+                    </Box>
+                  ))}
+                </Box>
+              ) : (
+                <Typography variant="body2" color="text.secondary" sx={{ py: 2, textAlign: 'center' }}>
+                  Aucune facture récente disponible
+                </Typography>
+              )}
+            </Box>
+            <Box sx={{ p: 2, backgroundColor: 'grey.100', textAlign: 'center' }}>
+              <Button 
+                component={Link} 
+                to="/invoices" 
+                variant="text"
+              >
+                Voir toutes les factures
+              </Button>
+            </Box>
+          </Paper>
+        </>
+      )}
+    </Container>
+  );
+};
+
+export default Dashboard;
