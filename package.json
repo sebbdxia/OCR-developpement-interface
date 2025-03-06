@@ -1,0 +1,19 @@
+{
+  "name": "ocr-developpement-interface",
+  "version": "1.0.0",
+  "description": "Interface de développement pour l'application OCR",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.21.2"
+  }
+}
