@@ -1,6 +1,25 @@
 {
+<<<<<<< HEAD
   "devDependencies": {
     "@types/axios": "^0.9.36",
     "@types/node": "^22.13.9"
+=======
+  "name": "ocr-developpement-interface",
+  "version": "1.0.0",
+  "description": "Interface de développement pour l'application OCR",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.21.2"
+>>>>>>> 4ab907e54452c83ad345e290d83906a555d0cc91
   }
 }

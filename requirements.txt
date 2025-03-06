@@ -1,5 +1,8 @@
-requests
+flask
+flask-pymongo
+flask-cors
 python-dotenv
+<<<<<<< HEAD
 flask
 flask-pymongo
 flask-cors
@@ -8,3 +11,9 @@ pillow
 azure-storage-blob
 ```
 # Ajoutez d'autres dépendances ici si nécessaire
+=======
+pytesseract
+pillow
+requests
+azure-storage-blob
+>>>>>>> 4ab907e54452c83ad345e290d83906a555d0cc91
