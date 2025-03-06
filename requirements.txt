@@ -1,3 +1,10 @@
 requests
 python-dotenv
+flask
+flask-pymongo
+flask-cors
+pytesseract
+pillow
+azure-storage-blob
+```
 # Ajoutez d'autres dépendances ici si nécessaire
